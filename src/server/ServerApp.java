@@ -7,9 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
-
 import item.Item;
+import modules.Bid;
 import modules.GUI;
 import modules.ReadFile;
 
@@ -18,7 +17,6 @@ public class ServerApp {
 	public static ArrayList<Item> items = new ArrayList<>();   // list for store the readed items
 
 	public static void main(String[] args) throws IOException {
-//		static ArrayList<Item> items = new ArrayList<>();   // list for store the readed items
 		
 		ReadFile.readFile(items);	
 		GUI.guiBegin();
@@ -30,11 +28,11 @@ public class ServerApp {
 		DataInputStream din = new DataInputStream(s.getInputStream()); // reading from client
 		DataOutputStream dout = new DataOutputStream(s.getOutputStream()); // write back to client
 		
-//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // reading from console
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // reading from console, not yet
 		
 		dout.writeUTF("Enter your Name:");
 		dout.flush();
-		String clientName = din.readUTF(); // store this -------
+		String clientName = din.readUTF(); // store this ------- done
 		
 //		System.out.println("Your name is " + clientName);
 		
@@ -42,7 +40,7 @@ public class ServerApp {
 		dout.flush();
 		String symbol = din.readUTF();
 		
-		int currentCost = -1;
+		int currentCost = -1;  // if not found, return -1
 		
 		for(Item item : items) {
 			if(item.getSymbol().contentEquals(symbol)) {
@@ -57,11 +55,12 @@ public class ServerApp {
 			dout.writeUTF("Enter your bid:");
 			dout.flush();
 			
-			int bid = Integer.valueOf(din.readUTF());
+			int bidPrice = Integer.valueOf(din.readUTF());
 			for(Item item : items) {
 				if(item.getSymbol().equals(symbol)) {
-					item.setPrice(bid);
-					System.out.println("bid set "+ bid);
+					item.setPrice(new Bid(clientName, bidPrice));
+//					System.out.println("bid set "+ bidPrice);
+					item.printVariation();
 				}
 			}
 			

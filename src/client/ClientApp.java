@@ -44,7 +44,7 @@ public class ClientApp {
 		}
 		
 		
-		
+		/// should not be closed when multi threading -- test without closing
 		
 		dout.close();
 		din.close();
