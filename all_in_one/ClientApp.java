@@ -1,4 +1,3 @@
-package client;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -19,7 +18,7 @@ public class ClientApp {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		System.out.println(din.readUTF());// printing count
+		//System.out.println(din.readUTF());// printing count
 		System.out.println(din.readUTF());  // server incoming
 		
 		String name = br.readLine();
