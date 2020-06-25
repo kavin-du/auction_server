@@ -23,11 +23,11 @@ public class ServerThreads extends Thread {
 	@Override
 	public void run() {
 		try {
-//			BufferedReader br = new BufferedReader(new InputStreamReader(this.s.getInputStream())); // reading from client
+			BufferedReader br = new BufferedReader(new InputStreamReader(this.s.getInputStream())); // reading from client
 			DataOutputStream dout = new DataOutputStream(this.s.getOutputStream()); // write back to client
 			
 			
-			DataInputStream din = new DataInputStream(this.s.getInputStream()); // read from server
+//			DataInputStream din = new DataInputStream(this.s.getInputStream()); // read from server
 			
 			
 			
@@ -40,17 +40,17 @@ public class ServerThreads extends Thread {
 			dout.writeUTF("Enter your Name:\n");
 			dout.flush();
 			
-			String clientName = din.readUTF();
+//			String clientName = din.readUTF();
 //			System.out.println("Your name is " + name2);
 			
-//			String clientName = br.readLine();
+			String clientName = br.readLine();
 //			
 //			System.out.println("Your name is " + clientName);
 			
 			dout.writeUTF("Enter symbol: \n");
 			dout.flush();
-//			String symbol = br.readLine();
-			String symbol = din.readUTF();
+			String symbol = br.readLine();
+//			String symbol = din.readUTF();
 			
 			int currentCost = -1;  // if not found, return -1
 			
@@ -67,8 +67,8 @@ public class ServerThreads extends Thread {
 				dout.writeUTF("Enter your bid:\n");
 				dout.flush();
 				
-//				int bidPrice = Integer.valueOf(br.readLine());   // readutf here
-				int bidPrice = Integer.valueOf(din.readUTF());   
+				int bidPrice = Integer.valueOf(br.readLine());   // readutf here
+//				int bidPrice = Integer.valueOf(din.readUTF());   
 				for(Item item : ServerApp.items) {
 					if(item.getSymbol().equals(symbol)) {
 						item.setPrice(new Bid(clientName, bidPrice));
