@@ -34,7 +34,7 @@ public class Item {
 	public int getPrice() {
 		return this.price;
 	}
-	public void setPrice(Bid bid) {
+	public synchronized void setPrice(Bid bid) {  // making this synchronize so other thread can't write at the same time
 		this.price = bid.getPrice();
 		this.variation.add(bid);
 	}

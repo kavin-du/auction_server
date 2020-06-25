@@ -33,7 +33,7 @@ public class ServerThreads extends Thread {
 			
 			dout.writeUTF("Enter your Name:\n");
 			dout.flush();
-//			String clientName = din.readUTF(); // store this ------- done
+
 			String clientName = br.readLine();
 			
 //			System.out.println("Your name is " + clientName);
