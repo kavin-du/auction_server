@@ -1,9 +1,10 @@
 package server;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import item.Item;
@@ -15,7 +16,9 @@ public class ServerThreads extends Thread {
 	private int counter;
 	
 	private BufferedReader br;
-	private DataOutputStream dout;
+	// private DataOutputStream dout;
+
+	private PrintWriter dout;
 	
 	private String clientName;
 	private String symbol;
@@ -31,24 +34,35 @@ public class ServerThreads extends Thread {
 	public void run() {
 		try {
 			this.br = new BufferedReader(new InputStreamReader(this.s.getInputStream(), "UTF-8")); // reading from client
-			this.dout = new DataOutputStream(this.s.getOutputStream()); // write back to client
+			// this.dout = new DataOutputStream(this.s.getOutputStream()); // write back to client
+
+			this.dout = new PrintWriter(
+				new BufferedWriter(
+				new OutputStreamWriter(s.getOutputStream(), "UTF-8")
+				), true);
 			
 			
 			System.out.println(""+counter+" client started"); // print in server
 			
-			this.dout.writeUTF(""+counter+" client started\n"); // print in client
+			this.dout.print(""+counter+" client started\n"); // print in client
 			this.dout.flush();
 			
-			this.dout.writeUTF("Enter your Name:\n");
+			this.dout.print("Enter your Name:\n");
 			this.dout.flush();
 			
 			this.clientName = this.br.readLine();
 			
-			sendSymbolAndPrice();
+			// sendSymbolAndPrice();
 			
-			if(this.currentCost >= 0) {
-				startBidding();
-				
+			while(true){
+				sendSymbolAndPrice();
+				if(this.currentCost >= 0) {
+					startBidding();
+					break;					
+				} else { // no matching company found
+
+					continue;
+				}
 			}
 
 			br.close();
@@ -61,9 +75,10 @@ public class ServerThreads extends Thread {
 	}
 	
 	public void sendSymbolAndPrice() throws Exception {
-		this.dout.writeUTF("Enter symbol: \n");
+		this.dout.print("\nEnter symbol: \n");
 		this.dout.flush();
 		this.symbol = this.br.readLine();
+		this.currentCost = -1;
 		
 		for(Item item : ServerApp.items) {
 			if(item.getSymbol().contentEquals(this.symbol)) {
@@ -71,7 +86,7 @@ public class ServerThreads extends Thread {
 			}
 		}
 		
-		this.dout.writeUTF(Integer.toString(currentCost));
+		this.dout.print(Integer.toString(currentCost));
 		this.dout.flush();
 		
 		
@@ -79,17 +94,17 @@ public class ServerThreads extends Thread {
 	
 	public void startBidding() throws Exception {
 		while(true) {
-			this.dout.writeUTF("\nEnter your bid: \nChange company-> change \nExit-> exit\n");
-//			this.dout.writeChars("Enter your bid: \nChange company-> change \nExit-> exit\n");
-			this.dout.flush();
+			this.dout.println("\nEnter your bid: \nChange company-> change \nExit-> exit\n>>");
+			// this.dout.flush();
 			
 			String clientEntered =this.br.readLine();
 			if(clientEntered.equals("exit")) {
 				break;
 			} else if (clientEntered.equals("change")) {
-				sendSymbolAndPrice();
-				
-//				clientEntered = this.br.readLine(); // taking client input again
+				this.currentCost = -1;
+				while(this.currentCost < 0){
+					sendSymbolAndPrice(); // send symbol until matching company found
+				}
 				continue; // continue without executing below codes
 			}
 			
