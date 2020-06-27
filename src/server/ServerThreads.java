@@ -112,7 +112,7 @@ public class ServerThreads extends Thread {
 			for(Item item : ServerApp.items) {
 				if(item.getSymbol().equals(this.symbol)) {
 					item.setPrice(new Bid(this.clientName, bidPrice));
-					item.printVariation();
+					// item.printVariation();
 				}
 			}
 			

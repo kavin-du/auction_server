@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import item.Item;
@@ -59,41 +60,32 @@ public class GUI{
         panel.setLayout(null);
         
 
-        JButton label1 = new JButton("<html>"+"FB"+"<br>"+ServerApp.items.get(FB).getPrice()+"</html>");
-        JButton label2 = new JButton("<html>"+"VRTU"+"<br>"+ServerApp.items.get(VRTU).getPrice()+"</html>");
-        JButton label3 = new JButton("<html>"+"MSFT"+"<br>"+ServerApp.items.get(MSFT).getPrice()+"</html>");
-        JButton label4 = new JButton("<html>"+"GOOGL"+"<br>"+ServerApp.items.get(GOOGL).getPrice()+"</html>");
-        JButton label5 = new JButton("<html>"+"YHOO"+"<br>"+ServerApp.items.get(YHOO).getPrice()+"</html>");
-        JButton label6 = new JButton("<html>"+"XLNX"+"<br>"+ServerApp.items.get(XLNX).getPrice()+"</html>");
-        JButton label7 = new JButton("<html>"+"TSLA"+"<br>"+ServerApp.items.get(TSLA).getPrice()+"</html>");
-        JButton label8 = new JButton("<html>"+"TXN"+"<br>"+ServerApp.items.get(TXN).getPrice()+"</html>");
+        JButton label1 = new JButton("<html>"+"Symbol: <font color=purple>FB</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(FB).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(FB).getPrice()+"</font></html>");
+        JButton label2 = new JButton("<html>"+"Symbol: <font color=purple>VRTU</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(VRTU).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(VRTU).getPrice()+"</font></html>");
+        JButton label3 = new JButton("<html>"+"Symbol: <font color=purple>MSFT</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(MSFT).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(MSFT).getPrice()+"</font></html>");
+        JButton label4 = new JButton("<html>"+"Symbol: <font color=purple>GOOGL</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(GOOGL).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(GOOGL).getPrice()+"</font></html>");
+        JButton label5 = new JButton("<html>"+"Symbol: <font color=purple>YHOO</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(YHOO).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(YHOO).getPrice()+"</font></html>");
+        JButton label6 = new JButton("<html>"+"Symbol: <font color=purple>XLNX</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(XLNX).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(XLNX).getPrice()+"</font></html>");
+        JButton label7 = new JButton("<html>"+"Symbol: <font color=purple>TSLA</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TSLA).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TSLA).getPrice()+"</font></html>");
+        JButton label8 = new JButton("<html>"+"Symbol: <font color=purple>TXN</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TXN).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TXN).getPrice()+"</font></html>");
+          
+        label1.setBounds(10, 10, 200, 200);
+        label2.setBounds(220, 10, 200, 200);
+        label3.setBounds(430, 10, 200, 200);
+        label4.setBounds(640, 10, 200, 200);
+        label5.setBounds(10, 220, 200, 200);
+        label6.setBounds(220, 220, 200, 200);
+        label7.setBounds(430, 220, 200, 200);
+        label8.setBounds(640, 220, 200, 200);
         
-//        JLabel label1 = new JLabel("<html>"+"FB"+"<br>"+items.get(FB).getPrice()+"</html>");
-//        JLabel label2 = new JLabel("<html>"+"VRTU"+"<br>"+items.get(VRTU).getPrice()+"</html>");
-//        JLabel label3 = new JLabel("<html>"+"MSFT"+"<br>"+items.get(MSFT).getPrice()+"</html>");
-//        JLabel label4 = new JLabel("<html>"+"GOOGL"+"<br>"+items.get(GOOGL).getPrice()+"</html>");
-//        JLabel label5 = new JLabel("<html>"+"YHOO"+"<br>"+items.get(YHOO).getPrice()+"</html>");
-//        JLabel label6 = new JLabel("<html>"+"XLNX"+"<br>"+items.get(XLNX).getPrice()+"</html>");
-//        JLabel label7 = new JLabel("<html>"+"TSLA"+"<br>"+items.get(TSLA).getPrice()+"</html>");
-//        JLabel label8 = new JLabel("<html>"+"TXN"+"<br>"+items.get(TXN).getPrice()+"</html>");
-        
-        label1.setBounds(10, 10, 120, 120);
-        label2.setBounds(140, 10, 120, 120);
-        label3.setBounds(270, 10, 120, 120);
-        label4.setBounds(400, 10, 120, 120);
-        label5.setBounds(10, 140, 120, 120);
-        label6.setBounds(140, 140, 120, 120);
-        label7.setBounds(270, 140, 120, 120);
-        label8.setBounds(400, 140, 120, 120);
-        
-        label1.setFont(new Font("Arial", Font.BOLD, 20)); // set font and font size
-        label2.setFont(new Font("Arial", Font.BOLD, 20));
-        label3.setFont(new Font("Arial", Font.BOLD, 20));
-        label4.setFont(new Font("Arial", Font.BOLD, 20));
-        label5.setFont(new Font("Arial", Font.BOLD, 20));
-        label6.setFont(new Font("Arial", Font.BOLD, 20));
-        label7.setFont(new Font("Arial", Font.BOLD, 20));
-        label8.setFont(new Font("Arial", Font.BOLD, 20));        
+        label1.setFont(new Font("Arial", Font.BOLD, 15)); // set font and font size
+        label2.setFont(new Font("Arial", Font.BOLD, 15));
+        label3.setFont(new Font("Arial", Font.BOLD, 15));
+        label4.setFont(new Font("Arial", Font.BOLD, 15));
+        label5.setFont(new Font("Arial", Font.BOLD, 15));
+        label6.setFont(new Font("Arial", Font.BOLD, 15));
+        label7.setFont(new Font("Arial", Font.BOLD, 15));
+        label8.setFont(new Font("Arial", Font.BOLD, 15));        
 
         panel.add(label1);
         panel.add(label2);
@@ -103,9 +95,70 @@ public class GUI{
         panel.add(label6);
         panel.add(label7);
         panel.add(label8);
+
+
+
+        // adding search box
+
+        JLabel tracklabel = new JLabel("Enter a symbol to track bid history.");
+        tracklabel.setBounds(300, 440, 250, 30);
+        panel.add(tracklabel);
+
+        JTextField tf = new JTextField();
+        tf.setBounds(320, 480, 210, 30);
+        panel.add(tf);
+
+        JButton track = new JButton("Track");
+        track.setBounds(375, 520, 100, 30);
+        track.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                JFrame trackFrame = new JFrame("Bid History");
+                trackFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // close without terminating the program
+
+                JPanel trackPanel = new JPanel();
+                trackPanel.setVisible(true);
+                trackPanel.setLayout(null);
+
+                JLabel trackValues = new JLabel();
+                String value = tf.getText();
+                if(!value.isEmpty()){
+                    
+                    String trackHistory = "<html> Enter a valid symbol! <br>Check whether letters are capital.</html>";
+                    for(Item item : ServerApp.items){
+                        if(item.getSymbol().equals(value)){
+                            trackHistory = item.getVariation();
+                        }
+                    }
+
+
+
+                    trackValues.setText(trackHistory);
+                    trackValues.setBounds(10,10,790,490);
+
+                    trackPanel.add(trackValues);
+
+                    trackFrame.add(trackPanel);
+                    trackFrame.setPreferredSize(new Dimension(800,500));
+                    trackFrame.pack();
+                    trackFrame.setLocationRelativeTo(null); // start window in center of screen
+                    trackFrame.setVisible(true);
+                }
+            }
+                
+                
+        });
+        panel.add(track);
+
+
+
+
+
+
+
         
         frame.add(panel); // add label to frame
-        frame.setPreferredSize(new Dimension(540,300));
+        frame.setPreferredSize(new Dimension(860,700));
         frame.pack();
         frame.setLocationRelativeTo(null); // start window in center of screen
         frame.setVisible(true);
@@ -113,15 +166,16 @@ public class GUI{
         ActionListener actlis  = new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent e) {
-        		label1.setText("<html>"+"FB"+"<br>"+ServerApp.items.get(FB).getPrice()+"</html>");
-        		label2.setText("<html>"+"VRTU"+"<br>"+ServerApp.items.get(VRTU).getPrice()+"</html>");
-        		label3.setText("<html>"+"MSFT"+"<br>"+ServerApp.items.get(MSFT).getPrice()+"</html>");
-        		label4.setText("<html>"+"GOOGL"+"<br>"+ServerApp.items.get(GOOGL).getPrice()+"</html>");
-        		label5.setText("<html>"+"YHOO"+"<br>"+ServerApp.items.get(YHOO).getPrice()+"</html>");
-        		label6.setText("<html>"+"XLNX"+"<br>"+ServerApp.items.get(XLNX).getPrice()+"</html>");
-        		label7.setText("<html>"+"TSLA"+"<br>"+ServerApp.items.get(TSLA).getPrice()+"</html>");
-        		label8.setText("<html>"+"TXN"+"<br>"+ServerApp.items.get(TXN).getPrice()+"</html>");
-//        		label1.repaint();
+        		label1.setText("<html>"+"Symbol: <font color=purple>FB</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(FB).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(FB).getPrice()+"</font></html>");
+                label2.setText("<html>"+"Symbol: <font color=purple>VRTU</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(VRTU).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(VRTU).getPrice()+"</font></html>");
+                label3.setText("<html>"+"Symbol: <font color=purple>MSFT</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(MSFT).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(MSFT).getPrice()+"</font></html>");
+                label4.setText("<html>"+"Symbol: <font color=purple>GOOGL</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(GOOGL).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(GOOGL).getPrice()+"</font></html>");
+                label5.setText("<html>"+"Symbol: <font color=purple>YHOO</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(YHOO).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(YHOO).getPrice()+"</font></html>");
+                label6.setText("<html>"+"Symbol: <font color=purple>XLNX</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(XLNX).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(XLNX).getPrice()+"</font></html>");
+                label7.setText("<html>"+"Symbol: <font color=purple>TSLA</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TSLA).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TSLA).getPrice()+"</font></html>");
+                label8.setText("<html>"+"Symbol: <font color=purple>TXN</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TXN).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TXN).getPrice()+"</font></html>");
+                
+                // label1.repaint();
         		
         	}			
         };
@@ -129,9 +183,8 @@ public class GUI{
         
         Timer timer = new Timer(500, actlis);
 		
-		
-		timer.start();
-	}
-	
+        timer.start();
+    }
+
 	
 }

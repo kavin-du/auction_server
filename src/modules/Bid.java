@@ -18,7 +18,7 @@ public class Bid {
 	@Override
 	public String toString() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); 
-		return "Client Name: "+this.clientName + " ,Bid: " + this.bidPrice + " ,Time: " + dtf.format(this.dateTime);
+		return "Client Name: <font color=green>"+this.clientName + "</font> ,Bid: <font color=blue>$" + this.bidPrice + "</font> ,Time: <font color=purple>" + dtf.format(this.dateTime)+"</font>";
 	}
 	
 	public int getPrice() {

@@ -19,10 +19,10 @@ public class ReadFile {
 					String[] parts = line.split(",");
 
 					String symbol = parts[0];
-					String securityName = parts[1];
-					//int price = Integer.parseInt(parts[parts.length - 1]);
+					String securityName = parts[1].split("-")[0];
+					int availableLots = Integer.parseInt(parts[parts.length - 1]);
 
-					Item item = new Item(symbol, securityName);
+					Item item = new Item(symbol, securityName, availableLots);
 					items.add(item);
 //					System.out.println(item.toString());
 
