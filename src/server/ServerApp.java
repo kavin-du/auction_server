@@ -19,7 +19,7 @@ public class ServerApp {
 		GUI.guiBegin(); 
 		
 		// creating server
-		ServerSocket ss = new ServerSocket(2000);
+		ServerSocket ss = new ServerSocket(2000);        // close this
 		int counter = 0;
 		while(counter < 2) {
 			Socket s = ss.accept(); // create new server thread each time

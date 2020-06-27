@@ -1,6 +1,7 @@
 package item;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import modules.Bid;
 
@@ -11,11 +12,12 @@ public class Item {
 	
 	private ArrayList<Bid> variation;  // variation of the bids for given item
 	
+	public static Random rand = new Random(); // to generate random prices
 	
-	public Item(String symbol, String securityName, int price) {
+	public Item(String symbol, String securityName) {
 		this.symbol = symbol;
 		this.securityName = securityName;
-		this.price = price;
+		this.price = rand.nextInt((2000-500)+1)+500; // generate prices between 500 and 2000
 		this.variation = new ArrayList<>();
 		
 	}

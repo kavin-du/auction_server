@@ -20,9 +20,9 @@ public class ReadFile {
 
 					String symbol = parts[0];
 					String securityName = parts[1];
-					int price = Integer.parseInt(parts[parts.length - 1]);
+					//int price = Integer.parseInt(parts[parts.length - 1]);
 
-					Item item = new Item(symbol, securityName, price);
+					Item item = new Item(symbol, securityName);
 					items.add(item);
 //					System.out.println(item.toString());
 

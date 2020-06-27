@@ -14,83 +14,95 @@ public class ServerThreads extends Thread {
 	private Socket s;
 	private int counter;
 	
+	private BufferedReader br;
+	private DataOutputStream dout;
+	
+	private String clientName;
+	private String symbol;
+	private int currentCost;
+	
 	public ServerThreads(Socket s, int counter) {
 		this.s = s;
 		this.counter = counter;
-		
+		this.currentCost = -1; // initial cost of a symbol is set to -1, so if NO matching symbol found, -1 can be send to client
 	}
 	
 	@Override
 	public void run() {
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(this.s.getInputStream())); // reading from client
-			DataOutputStream dout = new DataOutputStream(this.s.getOutputStream()); // write back to client
+			this.br = new BufferedReader(new InputStreamReader(this.s.getInputStream(), "UTF-8")); // reading from client
+			this.dout = new DataOutputStream(this.s.getOutputStream()); // write back to client
 			
 			
-//			DataInputStream din = new DataInputStream(this.s.getInputStream()); // read from server
-			
-			
-			
-	//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // reading from console, not yet
 			System.out.println(""+counter+" client started"); // print in server
 			
-			dout.writeUTF(""+counter+" client started\n"); // print in client
-			dout.flush();
+			this.dout.writeUTF(""+counter+" client started\n"); // print in client
+			this.dout.flush();
 			
-			dout.writeUTF("Enter your Name:\n");
-			dout.flush();
+			this.dout.writeUTF("Enter your Name:\n");
+			this.dout.flush();
 			
-//			String clientName = din.readUTF();
-//			System.out.println("Your name is " + name2);
+			this.clientName = this.br.readLine();
 			
-			String clientName = br.readLine();
-//			
-//			System.out.println("Your name is " + clientName);
+			sendSymbolAndPrice();
 			
-			dout.writeUTF("Enter symbol: \n");
-			dout.flush();
-			String symbol = br.readLine();
-//			String symbol = din.readUTF();
-			
-			int currentCost = -1;  // if not found, return -1
-			
-			for(Item item : ServerApp.items) {
-				if(item.getSymbol().contentEquals(symbol)) {
-					currentCost = item.getPrice();
-				}
-			}
-			
-			dout.writeUTF(Integer.toString(currentCost));
-			dout.flush();
-			
-			if(currentCost >= 0) {
-				dout.writeUTF("Enter your bid:\n");
-				dout.flush();
-				
-				int bidPrice = Integer.valueOf(br.readLine());   // readutf here
-//				int bidPrice = Integer.valueOf(din.readUTF());   
-				for(Item item : ServerApp.items) {
-					if(item.getSymbol().equals(symbol)) {
-						item.setPrice(new Bid(clientName, bidPrice));
-	//					System.out.println("bid set "+ bidPrice);
-						item.printVariation();
-					}
-				}
+			if(this.currentCost >= 0) {
+				startBidding();
 				
 			}
-			
-//			din.close();
+
+			br.close();
 //			dout.close();
-//			s.close();
-	//		ss.close();
-		} catch (Exception e) {
-			System.out.println(e);
+//			s.close();   // server only close socket, client close in and out
+		} catch (Exception e) {  
+//			System.out.println(e); // also close the connections
+			System.out.println(""+counter+" client exited.");
 		}
 	}
 	
+	public void sendSymbolAndPrice() throws Exception {
+		this.dout.writeUTF("Enter symbol: \n");
+		this.dout.flush();
+		this.symbol = this.br.readLine();
+		
+		for(Item item : ServerApp.items) {
+			if(item.getSymbol().contentEquals(this.symbol)) {
+				this.currentCost = item.getPrice();
+			}
+		}
+		
+		this.dout.writeUTF(Integer.toString(currentCost));
+		this.dout.flush();
+		
+		
+	}
 	
-	
-	
+	public void startBidding() throws Exception {
+		while(true) {
+			this.dout.writeUTF("\nEnter your bid: \nChange company-> change \nExit-> exit\n");
+//			this.dout.writeChars("Enter your bid: \nChange company-> change \nExit-> exit\n");
+			this.dout.flush();
+			
+			String clientEntered =this.br.readLine();
+			if(clientEntered.equals("exit")) {
+				break;
+			} else if (clientEntered.equals("change")) {
+				sendSymbolAndPrice();
+				
+//				clientEntered = this.br.readLine(); // taking client input again
+				continue; // continue without executing below codes
+			}
+			
+			int bidPrice = Integer.valueOf(clientEntered);   
+			for(Item item : ServerApp.items) {
+				if(item.getSymbol().equals(this.symbol)) {
+					item.setPrice(new Bid(this.clientName, bidPrice));
+					item.printVariation();
+				}
+			}
+			
+		}
+	}
 	
 	
 }
