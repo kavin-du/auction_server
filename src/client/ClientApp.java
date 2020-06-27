@@ -2,7 +2,6 @@ package client;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -16,9 +15,7 @@ public class ClientApp {
 		
 		Socket s = new Socket("localhost", 2000);
 		
-		// DataInputStream din = new DataInputStream(s.getInputStream()); // read from server
 		BufferedReader din = new BufferedReader(new InputStreamReader(s.getInputStream(), "UTF-8")); // reading from server
-//		DataOutputStream dout = new DataOutputStream(s.getOutputStream());
 		
 		PrintWriter dout = new PrintWriter(
 				new BufferedWriter(
@@ -31,16 +28,15 @@ public class ClientApp {
 		System.out.println(din.readLine());  // printing "enter your name: "
 		
 		String name = br.readLine(); // reading client name from console
-//		dout.writeUTF(name); // send name to the server
-		dout.println(name);
-//		dout.flush(); // auto flush enabled ?? 
+		dout.println(name); // send name to server
+		dout.flush(); 
 		
 		System.out.print(din.readLine()); // printing "enter symbol"
 		
 		String symbol = br.readLine(); // reading symbol from console
 		
 		dout.println(symbol); // send symbol to server
-//		dout.flush();
+		dout.flush();
 		
 		int response = Integer.valueOf(din.readLine());
 		System.out.println("Response is "+response);
@@ -52,7 +48,6 @@ public class ClientApp {
 					System.out.println(line);
 					line = din.readLine();
 				}
-				// System.out.println(din.readLine()); // server incoming, "enter your bid: or change or close"
 				
 				String clientEntered = br.readLine();
 				

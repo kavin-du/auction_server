@@ -10,13 +10,17 @@ import java.net.Socket;
 import item.Item;
 import modules.Bid;
 
+/**
+ * This class act as independant thread server
+ * for each client.
+ */
+
 public class ServerThreads extends Thread {
 	
 	private Socket s;
 	private int counter;
 	
 	private BufferedReader br;
-	// private DataOutputStream dout;
 
 	private PrintWriter dout;
 	
@@ -34,7 +38,6 @@ public class ServerThreads extends Thread {
 	public void run() {
 		try {
 			this.br = new BufferedReader(new InputStreamReader(this.s.getInputStream(), "UTF-8")); // reading from client
-			// this.dout = new DataOutputStream(this.s.getOutputStream()); // write back to client
 
 			this.dout = new PrintWriter(
 				new BufferedWriter(
@@ -51,9 +54,7 @@ public class ServerThreads extends Thread {
 			this.dout.flush();
 			
 			this.clientName = this.br.readLine();
-			
-			// sendSymbolAndPrice();
-			
+						
 			while(true){
 				sendSymbolAndPrice();
 				if(this.currentCost >= 0) {
@@ -66,19 +67,24 @@ public class ServerThreads extends Thread {
 			}
 
 			br.close();
-//			dout.close();
-//			s.close();   // server only close socket, client close in and out
+			dout.close();
+			s.close(); 
 		} catch (Exception e) {  
-//			System.out.println(e); // also close the connections
+			System.out.println("Error creating client "+counter+" "+e);
+		} finally {
 			System.out.println("client "+counter+" exited.");
 		}
 	}
 	
+	/*
+	this function get client input and send symbol and price whenever client connect 
+	for the first time	and whenever client changes the bidding company
+	*/
 	public void sendSymbolAndPrice() throws Exception {
 		this.dout.print("\nEnter symbol: \n");
 		this.dout.flush();
 		this.symbol = this.br.readLine();
-		this.currentCost = -1;
+		this.currentCost = -1; // making current cost of symbol as -1, so if there is no matching symbol -1 will be sent
 		
 		for(Item item : ServerApp.items) {
 			if(item.getSymbol().contentEquals(this.symbol)) {
@@ -86,18 +92,24 @@ public class ServerThreads extends Thread {
 			}
 		}
 		
-		this.dout.print(Integer.toString(currentCost));
+		this.dout.print(Integer.toString(currentCost)); // sending cost to the client
 		this.dout.flush();
-		
 		
 	}
 	
+	/*
+		After client enter a valid symbol, this function starts the bidding process
+		for that particular symbol, clients can change their bidding symbol
+		if they want.
+
+	*/
+
 	public void startBidding() throws Exception {
 		while(true) {
 			this.dout.println("\nEnter your bid: \nChange company-> change \nExit-> exit\n>>");
-			// this.dout.flush();
+			this.dout.flush();
 			
-			String clientEntered =this.br.readLine();
+			String clientEntered =this.br.readLine(); // reading user input
 			if(clientEntered.equals("exit")) {
 				break;
 			} else if (clientEntered.equals("change")) {
@@ -111,8 +123,7 @@ public class ServerThreads extends Thread {
 			int bidPrice = Integer.valueOf(clientEntered);   
 			for(Item item : ServerApp.items) {
 				if(item.getSymbol().equals(this.symbol)) {
-					item.setPrice(new Bid(this.clientName, bidPrice));
-					// item.printVariation();
+					item.setPrice(new Bid(this.clientName, bidPrice)); // set bid price according to the client
 				}
 			}
 			

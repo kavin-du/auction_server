@@ -5,6 +5,10 @@ import java.util.Random;
 
 import modules.Bid;
 
+/* 
+* This class act as a container for a particular company, having symbol, 
+* security name, price and available lots and also information about who bid for the symbol 
+*/
 public class Item {
 	private String symbol;
 	private String securityName;

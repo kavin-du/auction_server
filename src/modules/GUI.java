@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,10 +14,14 @@ import javax.swing.Timer;
 
 import item.Item;
 import server.ServerApp;
-
+/**
+ * This class creates the gui for symbols given in
+ * the lab sheet, also gui takes an input for a given symbol
+ * and show the bid history
+ */
 public class GUI{
 	
-	// indexes for symbols
+	// indexes for symbols, initialze as negative values to keep track of real values
 	static int FB = -99; 
 	static int VRTU = -99;
 	static int MSFT = -99;
@@ -29,7 +32,8 @@ public class GUI{
 	static int TXN = -99;
 	
 	public static void guiBegin() {
-		
+        
+        // getting the real indexes for the given symbols from arraylist
 		for(int i=0; i< ServerApp.items.size(); i++) {
 			if(ServerApp.items.get(i).getSymbol().equals("FB")) {
 				FB = i;
@@ -50,8 +54,6 @@ public class GUI{
 			}
 		}
 		
-//		System.out.printf("%d %d %d %d %d %d %d %d", FB,VRTU,MSFT,GOOGL,YHOO,XLNX,TSLA,TXN);
-		
 		JFrame frame = new JFrame("Auction Server");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -69,7 +71,7 @@ public class GUI{
         JButton label7 = new JButton("<html>"+"Symbol: <font color=purple>TSLA</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TSLA).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TSLA).getPrice()+"</font></html>");
         JButton label8 = new JButton("<html>"+"Symbol: <font color=purple>TXN</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TXN).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TXN).getPrice()+"</font></html>");
           
-        label1.setBounds(10, 10, 200, 200);
+        label1.setBounds(10, 10, 200, 200); // placing in the relevant positions
         label2.setBounds(220, 10, 200, 200);
         label3.setBounds(430, 10, 200, 200);
         label4.setBounds(640, 10, 200, 200);
@@ -87,7 +89,7 @@ public class GUI{
         label7.setFont(new Font("Arial", Font.BOLD, 15));
         label8.setFont(new Font("Arial", Font.BOLD, 15));        
 
-        panel.add(label1);
+        panel.add(label1); // add to the panel
         panel.add(label2);
         panel.add(label3);
         panel.add(label4);
@@ -96,9 +98,7 @@ public class GUI{
         panel.add(label7);
         panel.add(label8);
 
-
-
-        // adding search box
+        // adding search box to take user input
 
         JLabel tracklabel = new JLabel("Enter a symbol to track bid history.");
         tracklabel.setBounds(300, 440, 250, 30);
@@ -124,14 +124,12 @@ public class GUI{
                 String value = tf.getText();
                 if(!value.isEmpty()){
                     
-                    String trackHistory = "<html> Enter a valid symbol! <br>Check whether letters are capital.</html>";
+                    String trackHistory = "<html> <font color='red'>Enter a valid symbol! <br>Check whether letters are capital!</font></html>";
                     for(Item item : ServerApp.items){
                         if(item.getSymbol().equals(value)){
                             trackHistory = item.getVariation();
                         }
                     }
-
-
 
                     trackValues.setText(trackHistory);
                     trackValues.setBounds(10,10,790,490);
@@ -150,20 +148,13 @@ public class GUI{
         });
         panel.add(track);
 
-
-
-
-
-
-
-        
         frame.add(panel); // add label to frame
         frame.setPreferredSize(new Dimension(860,700));
         frame.pack();
         frame.setLocationRelativeTo(null); // start window in center of screen
         frame.setVisible(true);
         
-        ActionListener actlis  = new ActionListener() {
+        ActionListener actlis  = new ActionListener() { // refreshing each value after every 500ms
         	@Override
         	public void actionPerformed(ActionEvent e) {
         		label1.setText("<html>"+"Symbol: <font color=purple>FB</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(FB).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(FB).getPrice()+"</font></html>");
@@ -175,14 +166,10 @@ public class GUI{
                 label7.setText("<html>"+"Symbol: <font color=purple>TSLA</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TSLA).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TSLA).getPrice()+"</font></html>");
                 label8.setText("<html>"+"Symbol: <font color=purple>TXN</font>"+"<br>"+"Company: "+"<font color='teal'>"+ServerApp.items.get(TXN).getSecurityName()+"</font>"+"<br>"+"Price: <font color=blue>$"+ServerApp.items.get(TXN).getPrice()+"</font></html>");
                 
-                // label1.repaint();
-        		
         	}			
         };
         
-        
-        Timer timer = new Timer(500, actlis);
-		
+        Timer timer = new Timer(500, actlis); // refreshing values afer every 500ms
         timer.start();
     }
 
