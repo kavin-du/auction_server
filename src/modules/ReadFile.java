@@ -24,7 +24,6 @@ public class ReadFile {
 
 					Item item = new Item(symbol, securityName, availableLots);
 					items.add(item);
-//					System.out.println(item.toString());
 
 				} else {
 					flag = true;

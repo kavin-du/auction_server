@@ -42,9 +42,9 @@ public class ServerThreads extends Thread {
 				), true);
 			
 			
-			System.out.println(""+counter+" client started"); // print in server
+			System.out.println("client "+counter+" started"); // print in server
 			
-			this.dout.print(""+counter+" client started\n"); // print in client
+			this.dout.print("client "+counter+" started\n"); // print in client
 			this.dout.flush();
 			
 			this.dout.print("Enter your Name:\n");
@@ -70,7 +70,7 @@ public class ServerThreads extends Thread {
 //			s.close();   // server only close socket, client close in and out
 		} catch (Exception e) {  
 //			System.out.println(e); // also close the connections
-			System.out.println(""+counter+" client exited.");
+			System.out.println("client "+counter+" exited.");
 		}
 	}
 	

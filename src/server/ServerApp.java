@@ -20,14 +20,16 @@ public class ServerApp {
 		
 		// creating server
 		ServerSocket ss = new ServerSocket(2000);        // close this
+		int threads = Runtime.getRuntime().availableProcessors(); // number of processors available in system
+		System.out.println(threads);
 		int counter = 0;
-		while(counter < 2) {
+		while(counter < threads) {
 			Socket s = ss.accept(); // create new server thread each time
 			ServerThreads serverthread = new ServerThreads(s, counter);
 			serverthread.start();
 			counter ++;
 		}
-		
+		ss.close();
 		// close ss, server socket
 	}
 	
