@@ -47,13 +47,14 @@ public class ServerThreads extends Thread {
 			
 			System.out.println("client "+counter+" started"); // print in server
 			
-			this.dout.print("client "+counter+" started\n"); // print in client
+			this.dout.print("client "+counter+" started\n"); // ----print in client
 			this.dout.flush();
 			
 			this.dout.print("Enter your Name:\n");
 			this.dout.flush();
 			
-			this.clientName = this.br.readLine();
+			this.clientName = this.br.readLine(); 
+			System.out.println("client name is "+this.clientName); 
 						
 			while(true){
 				sendSymbolAndPrice();
@@ -61,7 +62,6 @@ public class ServerThreads extends Thread {
 					startBidding();
 					break;					
 				} else { // no matching company found
-
 					continue;
 				}
 			}
@@ -81,7 +81,7 @@ public class ServerThreads extends Thread {
 	for the first time	and whenever client changes the bidding company
 	*/
 	public void sendSymbolAndPrice() throws Exception {
-		this.dout.print("\nEnter symbol: \n");
+		this.dout.println("Enter symbol: \n");
 		this.dout.flush();
 		this.symbol = this.br.readLine();
 		this.currentCost = -1; // making current cost of symbol as -1, so if there is no matching symbol -1 will be sent
@@ -92,7 +92,7 @@ public class ServerThreads extends Thread {
 			}
 		}
 		
-		this.dout.print(Integer.toString(currentCost)); // sending cost to the client
+		this.dout.println(Integer.toString(currentCost)); // sending cost to the client
 		this.dout.flush();
 		
 	}
@@ -106,7 +106,7 @@ public class ServerThreads extends Thread {
 
 	public void startBidding() throws Exception {
 		while(true) {
-			this.dout.println("\nEnter your bid: \nChange company-> change \nExit-> exit\n>>");
+			this.dout.println("\nEnter your bid: \nChange company-> change \nExit-> exit\n>>\n");
 			this.dout.flush();
 			
 			String clientEntered =this.br.readLine(); // reading user input

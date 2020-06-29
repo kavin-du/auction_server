@@ -24,58 +24,53 @@ public class ClientApp {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // read from console
 		
-		System.out.println(din.readLine());// printing "client started"
-		System.out.println(din.readLine());  // printing "enter your name: "
+		System.out.println(din.readLine());// ----printing "client started"
+		System.out.println(din.readLine());  // ---printing "enter your name: "
 		
 		String name = br.readLine(); // reading client name from console
-		dout.println(name); // send name to server
+		dout.println(name); // -----send name to server
 		dout.flush(); 
 		
-		System.out.print(din.readLine()); // printing "enter symbol"
+		outerloop: 
+		while(true) {
+			String server = din.readLine();
+			while(din.ready()) {
+				System.out.println(server);// printing "enter symbol"
+				server = din.readLine();
+			}
 		
-		String symbol = br.readLine(); // reading symbol from console
-		
-		dout.println(symbol); // send symbol to server
-		dout.flush();
-		
-		int response = Integer.valueOf(din.readLine());
-		System.out.println("Response is "+response);
-		
-		if(response >= 0) {
-			while(true) {
-				String line = din.readLine();
-				while(din.ready()){
-					System.out.println(line);
-					line = din.readLine();
+			String symbol = br.readLine(); // reading symbol from console
+			
+			dout.println(symbol); // send symbol to server
+			dout.flush();
+			
+			int response = Integer.valueOf(din.readLine());
+			System.out.println("Response is "+response);
+			if(response >= 0){
+				while(true){
+					String line = din.readLine(); // enter bid or change or exit
+					while(din.ready()){
+						System.out.println(line);
+						line = din.readLine();
+					}
+					
+					String clientEntered = br.readLine(); // BID, CHANGE, EXIT
+					
+					dout.println(clientEntered); // read bid from console and send to server
+					dout.flush();
+					
+					if(clientEntered.equals("exit")) {
+						break outerloop;
+					} else if(clientEntered.equals("change")) {
+						break;
+					}	
+
 				}
 				
-				String clientEntered = br.readLine();
-				
-				dout.println(clientEntered); // read bid from console and send to server
-				dout.flush();
-				
-				if(clientEntered.equals("exit")) {
-					break;
-				} else if(clientEntered.equals("change")) {
-					System.out.print(din.readLine()); // printing "enter symbol"
-					
-					symbol = br.readLine(); // reading symbol from console
-					
-//					dout.writeUTF(symbol); // send symbol to server
-					dout.println(symbol);
-//					dout.flush();
-					
-					response = Integer.valueOf(din.readLine());
-					System.out.println("Response is "+response);
-					continue;
-				}
-				
-				
+			} else {
+				continue;
 			}
 		}
-		
-		
-		/// should not be closed when multi threading -- test without closing
 		
 		dout.close();
 		din.close();
